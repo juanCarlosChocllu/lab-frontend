@@ -20,6 +20,8 @@ import {
   registrarCombinacion,
 } from "../service/tiempoCombinacionService";
 import { useForm } from "react-hook-form";
+import { AxiosError } from "axios";
+import { toast } from "react-toastify";
 
 const style = {
   position: "absolute",
@@ -61,9 +63,14 @@ export const TiempoCombinacionModal = ({ closeModal, isOpen }: modalI) => {
   const onSubmit = async(data: RegistrarCombinacionI) => {
     try {
      const response = await   registrarCombinacion(data)
-     
+    if(response.status == 201){
+      toast.success('Registrado')
+    }
     } catch (error) {
-        
+        const e = error as AxiosError
+        if(e.status === 409){
+          toast.error('Conflicto')
+        }
     }
   };
 

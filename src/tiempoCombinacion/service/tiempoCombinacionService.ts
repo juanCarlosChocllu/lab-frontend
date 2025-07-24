@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { instance } from "../../core/config/instance";
 import {
   combinacionDataI,
@@ -25,9 +26,10 @@ export async function listarTipoColor(): Promise<combinacionDataI[]> {
 
 export async function registrarCombinacion(
   data: RegistrarCombinacionI
-): Promise<combinacionDataI[]> {
+): Promise<AxiosResponse> {
   try {
     const response = await instance.post("combinacion/tiempo", data);
+    
     return response.data;
   } catch (error) {
     throw error;

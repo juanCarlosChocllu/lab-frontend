@@ -3,12 +3,12 @@ import { SeguimientoI, VentasI } from "../interface/ventas";
 import { useEffect, useState } from "react";
 import { modalAccion } from "../../core/hook/modalAccion";
 import { SeguimientoModal } from "../modal/SeguimientoModal";
-import { Paginador } from "../../core/components/Paginador";
 import { paginador } from "../../core/hook/paginador";
 import { ItemsPorPagina } from "../../core/components/ItemsPorPagina";
 import { HttpStatus } from "../../core/enum/httpStatus";
 import TableContainer from '@mui/material/TableContainer';
-import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Button, Pagination, Stack, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { porcentajeIdeal } from "../../core/util/porcentajeIdeal";
 export const ListarVentas = () => {
   const [ventas, setVentas] = useState<VentasI[]>([]);
   const [seguimiento, setSeguimiento] = useState<SeguimientoI[]>([]);
@@ -44,8 +44,8 @@ export const ListarVentas = () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell 
-            
+            <TableCell
+
               aria-sort="other"
             >
               pedido
@@ -92,12 +92,11 @@ export const ListarVentas = () => {
               <TableCell  >{item.timpoTranscurridoTransporte}</TableCell >
               <TableCell  >{item.timpoTranscurrido}</TableCell >
               <TableCell  >{item.tiempoPrometido}</TableCell >
-              <TableCell  >{0}</TableCell >
-
+              <TableCell  >{porcentajeIdeal(item.timpoTranscurrido, item.tiempoPrometido)}%</TableCell >
               <TableCell>
                 <Button
                   onClick={() => tracking(item.seguimiento, item.pedido)}
-                 
+
                 >
                   Tracking
                 </Button>
@@ -106,11 +105,16 @@ export const ListarVentas = () => {
           ))}
         </TableBody>
       </Table>
-      <Paginador
-        paginaActual={pagina}
-        paginaSeleccionada={setPagina}
-        paginas={paginas}
-      />
+      <Stack mt={2} alignItems="center" spacing={2}>
+        <Pagination
+          count={paginas}
+          page={pagina}
+          onChange={(_, value) => setPagina(value)}
+          color="primary"
+          showFirstButton
+          showLastButton
+        />
+      </Stack>
       {isOpen && pedido && (
         <SeguimientoModal
           closeModal={closeModal}

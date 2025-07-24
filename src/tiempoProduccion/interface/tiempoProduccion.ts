@@ -18,7 +18,7 @@ export interface tiempoProduccionI {
   tratamiento: string;
   sucursal: string;
   tipo:string
-  
+    tiempoTransporte:number
 }
 
 
@@ -65,6 +65,7 @@ estadoAntireflejo :string
  
   combinacionTiempo:string;
 
+  tiempoTransporte:number
 
   sucursal: string;
 }
