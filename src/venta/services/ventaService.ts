@@ -1,18 +1,13 @@
 import { instance } from "../../core/config/instance"
-import { ParmasI } from "../../core/interface/params"
 import { ResponseI } from "../../core/interface/response"
+import { buscadorI } from "../interface/buscador"
 import { VentasI } from "../interface/ventas"
 
-export async  function listarVentas (limite:number, pagina:number):Promise<ResponseI<VentasI>>{
+export async  function listarVentas (buscador:buscadorI):Promise<ResponseI<VentasI>>{
     try {
-        const params:ParmasI = {
-            limite:limite,
-            pagina:pagina
-        }
-        const response  = await instance.get('venta',{
-            params
-        })
-
+        console.log(buscador);
+       
+        const response  = await instance.post('venta/listar', buscador)
         return response.data
     } catch (error) {
       

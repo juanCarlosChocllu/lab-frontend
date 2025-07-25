@@ -1,7 +1,7 @@
 export function porcentajeIdeal(
   tiempoLaboratorio: string,
   tiempoPrometido: string
-): string {
+): number {
     let resultado = 0
   const laboratorio = parsearTiempoMinutos(tiempoLaboratorio);
   const prometido = parsearTiempoMinutos(tiempoPrometido);
@@ -9,28 +9,24 @@ export function porcentajeIdeal(
     resultado = (laboratorio / prometido) * 100;
   }
 
-  return resultado.toFixed(2);
+  return Number(resultado.toFixed(2));
 }
 
-function parsearTiempoMinutos(tiempoStr: string): number {
+export function parsearTiempoMinutos(tiempoStr: string): number {
   let totalMinutos = 0;
-
   if (tiempoStr) {
     const diasMatch = tiempoStr.match(/(\d+)\s*dia\(s\)/);
     if (diasMatch) {
       totalMinutos += parseInt(diasMatch[1], 10) * 24 * 60;
     }
-
     const horasMatch = tiempoStr.match(/(\d+)h/);
     if (horasMatch) {
       totalMinutos += parseInt(horasMatch[1], 10) * 60;
     }
-
     const minutosMatch = tiempoStr.match(/(\d+)m/);
     if (minutosMatch) {
       totalMinutos += parseInt(minutosMatch[1], 10);
     }
   }
-
   return totalMinutos;
 }
