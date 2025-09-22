@@ -63,7 +63,7 @@ export const Crear = () => {
       >
         Registrar Combinación
       </Button>
-
+      
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl bg-white p-10 rounded-2xl shadow-2xl border border-gray-100"

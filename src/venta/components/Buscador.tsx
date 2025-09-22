@@ -3,6 +3,7 @@ import Select from "react-select";
 import { ListarSucursalI } from "../../sucursal/interface/sucursal";
 import { listarSucursal } from "../../sucursal/service/sucursalService";
 import { buscadorI } from "../interface/buscador";
+import { Paper } from "@mui/material";
 
 export const Buscador = ({
   setFilter
@@ -80,7 +81,7 @@ export const Buscador = ({
     }
   }
   return (
-    <div className="p-6 bg-white rounded-xl shadow-md mb-8 border border-gray-200">
+    <Paper className="p-6 bg-white rounded-xl shadow-md mb-8 border border-gray-200">
       <h2 className="text-xl font-semibold mb-6 text-blue-700 flex items-center gap-2">
         🔍 Filtros de Búsqueda
       </h2>
@@ -178,6 +179,6 @@ export const Buscador = ({
           </button>
         </div>
       </form>
-    </div>
+    </Paper>
   );
 };

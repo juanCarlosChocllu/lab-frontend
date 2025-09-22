@@ -26,3 +26,16 @@ export async function registrarTiempoProduccion(data:RegistarTiempoProduccionI):
         throw error
     }
 }
+
+
+export async function registrarTiempoProduccionExcel(archivo:File):Promise<AxiosResponse> {
+   const data ={
+        file:archivo
+    }
+    try {
+        const reporte = await instance.post('excel/tiempo/entrega', data,{headers:{'Content-Type': 'multipart/form-data'}})
+        return reporte.data
+    } catch (error) {
+         throw error
+    }
+}

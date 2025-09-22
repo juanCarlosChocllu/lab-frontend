@@ -5,6 +5,10 @@ import { Sidebar } from "../components/Sidebar";
 import { reporteRouter } from "../../reporte/router/reporteRouter";
 import { tiempoPrometidoRouter } from "../../tiempoPrometido/routers/tiempoPrometidoRouter";
 import { tiempoProduccionRouter } from "../../tiempoProduccion/router/tiempoProduccionRouter";
+import { AutenticacionPage } from "../../autenticacion/page/AutenticacionPage";
+import { useContext } from "react";
+import { ContextAutenticacion } from "../context/contextAutenticacion";
+import { usuarioRouter } from "../../usuarios/router/usuarioRouter";
 
 const rutas = (rutas: routerI[]) => {
   return rutas.map((item, i) => (
@@ -13,18 +17,21 @@ const rutas = (rutas: routerI[]) => {
 };
 
 export const RouterIndex = () => {
+  const { autenticacion } = useContext(ContextAutenticacion);
   return (
     <BrowserRouter>
-
-        <Routes>
-          <Route path={"/"} element={<Sidebar/>}>
+      <Routes>
+        <Route
+          path={"/"}
+          element={autenticacion ? <Sidebar /> : <AutenticacionPage />}
+        >
           {rutas(ventaRouter)}
           {rutas(reporteRouter)}
           {rutas(tiempoPrometidoRouter)}
           {rutas(tiempoProduccionRouter)}
-          </Route>
-        </Routes>
- 
+            {rutas(usuarioRouter)}
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 };

@@ -28,7 +28,7 @@ export const Listar = () => {
   const [pagina, setPagina] = useState<number>(1);
   const [limite, setLimite] = useState<number>(10);
   console.log(limite);
-  
+
   useEffect(() => {
     (async () => {
       try {
@@ -52,9 +52,19 @@ export const Listar = () => {
         Registrar
       </Button>
 
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => navigate("/tiempo/registrar/excel")}
+        sx={{ m: 2 }}
+      >
+        Registrar excel
+      </Button>
+
+
       <TableContainer>
-         
-    
+
+
         <Box mt={2} mb={2} display="flex" justifyContent="flex-end" alignItems="center" gap={2}>
           <FormControl size="small" sx={{ width: 120 }}>
             <InputLabel id="items-per-page-label">Items por página</InputLabel>
@@ -134,16 +144,16 @@ export const Listar = () => {
           </TableBody>
         </Table>
       </TableContainer>
-        <Stack mt={2} alignItems="center" spacing={2}>
-              <Pagination
-                count={paginas}
-                page={pagina}
-                onChange={(_, value) => setPagina(value)}
-                color="primary"
-                showFirstButton
-                showLastButton
-              />
-            </Stack>
+      <Stack mt={2} alignItems="center" spacing={2}>
+        <Pagination
+          count={paginas}
+          page={pagina}
+          onChange={(_, value) => setPagina(value)}
+          color="primary"
+          showFirstButton
+          showLastButton
+        />
+      </Stack>
     </Paper>
   );
 };

@@ -12,12 +12,14 @@ import ListItemText from "@mui/material/ListItemText";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, Outlet } from "react-router";
+import { ContextAutenticacion } from "../context/contextAutenticacion";
 
 const drawerWidth = 240;
 
 export function Sidebar() {
+   const {logout} = useContext(ContextAutenticacion)
   const [open, setOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -29,7 +31,13 @@ export function Sidebar() {
     { text: "Cargar Archivo", route: "/reporte" },
     { text: "Combinacion", route: "/" },
     { text: "Tiempo produccion", route: "/tiempo/produccion" },
-    { text: "Salir", route: "/listar/tiempoCombiancion" },
+      { text: "Usuarios", route: "/listar/usuarios" },
+   {
+    text: "Salir",
+    action: () => {
+      logout(); 
+    },
+  },
   ];
 
   const drawer = (
@@ -37,21 +45,37 @@ export function Sidebar() {
       <Toolbar />
       <Divider />
       <List>
-        {menuItems.map((item, index) => (
-          <ListItem key={item.text} disablePadding>
-            <ListItemButton
-              component={Link}
-              to={item.route}
-              onClick={() => setOpen(false)} 
-            >
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+  {menuItems.map((item, index) => (
+    <ListItem key={item.text} disablePadding>
+      {item.action ? (
+    
+        <ListItemButton
+          onClick={() => {
+            item.action?.(); 
+            setOpen(false);
+          }}
+        >
+          <ListItemIcon>
+            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+          </ListItemIcon>
+          <ListItemText primary={item.text} />
+        </ListItemButton>
+      ) : (
+      
+        <ListItemButton
+          component={Link}
+          to={item.route}
+          onClick={() => setOpen(false)}
+        >
+          <ListItemIcon>
+            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+          </ListItemIcon>
+          <ListItemText primary={item.text} />
+        </ListItemButton>
+      )}
+    </ListItem>
+  ))}
+</List>
     </div>
   );
 
