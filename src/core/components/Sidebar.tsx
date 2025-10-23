@@ -19,7 +19,7 @@ import { ContextAutenticacion } from "../context/contextAutenticacion";
 const drawerWidth = 240;
 
 export function Sidebar() {
-   const {logout} = useContext(ContextAutenticacion)
+  const { logout } = useContext(ContextAutenticacion);
   const [open, setOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -29,15 +29,15 @@ export function Sidebar() {
   const menuItems = [
     { text: "Ventas", route: "/listar/venta" },
     { text: "Cargar Archivo", route: "/reporte" },
-    { text: "Combinacion", route: "/" },
+    { text: "Rangos", route: "/listar/rango" },
     { text: "Tiempo produccion", route: "/tiempo/produccion" },
-      { text: "Usuarios", route: "/listar/usuarios" },
-   {
-    text: "Salir",
-    action: () => {
-      logout(); 
+    { text: "Usuarios", route: "/listar/usuarios" },
+    {
+      text: "Salir",
+      action: () => {
+        logout();
+      },
     },
-  },
   ];
 
   const drawer = (
@@ -45,37 +45,35 @@ export function Sidebar() {
       <Toolbar />
       <Divider />
       <List>
-  {menuItems.map((item, index) => (
-    <ListItem key={item.text} disablePadding>
-      {item.action ? (
-    
-        <ListItemButton
-          onClick={() => {
-            item.action?.(); 
-            setOpen(false);
-          }}
-        >
-          <ListItemIcon>
-            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-          </ListItemIcon>
-          <ListItemText primary={item.text} />
-        </ListItemButton>
-      ) : (
-      
-        <ListItemButton
-          component={Link}
-          to={item.route}
-          onClick={() => setOpen(false)}
-        >
-          <ListItemIcon>
-            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-          </ListItemIcon>
-          <ListItemText primary={item.text} />
-        </ListItemButton>
-      )}
-    </ListItem>
-  ))}
-</List>
+        {menuItems.map((item, index) => (
+          <ListItem key={item.text} disablePadding>
+            {item.action ? (
+              <ListItemButton
+                onClick={() => {
+                  item.action?.();
+                  setOpen(false);
+                }}
+              >
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            ) : (
+              <ListItemButton
+                component={Link}
+                to={item.route}
+                onClick={() => setOpen(false)}
+              >
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            )}
+          </ListItem>
+        ))}
+      </List>
     </div>
   );
 
@@ -83,7 +81,6 @@ export function Sidebar() {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
 
-   
       <IconButton
         onClick={handleDrawerToggle}
         sx={{ position: "fixed", top: 16, left: 6, zIndex: 1300 }}
@@ -92,13 +89,12 @@ export function Sidebar() {
         <MenuIcon />
       </IconButton>
 
-
       <Drawer
         variant="temporary"
         open={open}
         onClose={handleDrawerToggle}
         ModalProps={{
-          keepMounted: true, 
+          keepMounted: true,
         }}
         sx={{
           "& .MuiDrawer-paper": {
@@ -110,7 +106,6 @@ export function Sidebar() {
         {drawer}
       </Drawer>
 
-   
       <Box
         component="main"
         sx={{
@@ -119,7 +114,7 @@ export function Sidebar() {
         }}
       >
         <Toolbar />
-        <Outlet/>
+        <Outlet />
       </Box>
     </Box>
   );
