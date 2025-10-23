@@ -19,6 +19,7 @@ export interface tiempoProduccionI {
   sucursal: string;
   tipo:string
     tiempoTransporte:number
+    esperaMontura:number
 }
 
 
@@ -26,7 +27,7 @@ export interface RegistarTiempoProduccionI {
 
   recepcion: number;
 
-  
+    esperaMontura: number;
   almacen: number;
 
  

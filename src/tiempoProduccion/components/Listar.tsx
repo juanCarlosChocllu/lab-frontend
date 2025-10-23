@@ -58,14 +58,18 @@ export const Listar = () => {
         onClick={() => navigate("/tiempo/registrar/excel")}
         sx={{ m: 2 }}
       >
-        Registrar excel
+        carga masiva
       </Button>
 
-
       <TableContainer>
-
-
-        <Box mt={2} mb={2} display="flex" justifyContent="flex-end" alignItems="center" gap={2}>
+        <Box
+          mt={2}
+          mb={2}
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="center"
+          gap={2}
+        >
           <FormControl size="small" sx={{ width: 120 }}>
             <InputLabel id="items-per-page-label">Items por página</InputLabel>
             <Select
@@ -85,28 +89,30 @@ export const Listar = () => {
             </Select>
           </FormControl>
         </Box>
-        <Table stickyHeader>
+        <Table size="small">
           <TableHead>
             <TableRow sx={{ backgroundColor: "#f5f5f5" }}>
               <TableCell>Sucursal</TableCell>
-              <TableCell align="right">Tipo de Lente</TableCell>
-              <TableCell align="right">Color</TableCell>
-              <TableCell align="right">Tratamiento</TableCell>
-              <TableCell align="right">Recepción</TableCell>
-              <TableCell align="right">Almacén</TableCell>
-              <TableCell align="right">Cálculo</TableCell>
-              <TableCell align="right">Digital</TableCell>
-              <TableCell align="right">Antirreflejo</TableCell>
-              <TableCell align="right">Bisel</TableCell>
-              <TableCell align="right">Tinte</TableCell>
-              <TableCell align="right">Control Calidad</TableCell>
-              <TableCell align="right">Despacho</TableCell>
-              <TableCell align="right">Tiemp. Entrega</TableCell>
-              <TableCell align="right">Tiemp. Trans</TableCell>
-              <TableCell align="right">Estado Ant.</TableCell>
-              <TableCell align="right">Lente</TableCell>
-              <TableCell align="right">Proceso</TableCell>
-              <TableCell align="right">Tipo</TableCell>
+              <TableCell >Tipo Lente</TableCell>
+              <TableCell >Color</TableCell>
+              <TableCell >Tratamiento</TableCell>
+              <TableCell >Recepción</TableCell>
+              <TableCell >Almacén</TableCell>
+              <TableCell >Cálculo</TableCell>
+              <TableCell >Digital</TableCell>
+              <TableCell >Antirreflejo</TableCell>
+              <TableCell >Espera montura</TableCell>
+              <TableCell >Bisel</TableCell>
+              <TableCell >Tinte</TableCell>
+              <TableCell >Control Calidad</TableCell>
+              <TableCell >Despacho</TableCell>
+              <TableCell >Tiemp. Entrega</TableCell>
+              <TableCell >Tiemp. Trans</TableCell>
+              <TableCell >Tiempo Total</TableCell>
+              <TableCell >Estado Ant.</TableCell>
+              <TableCell >Lente</TableCell>
+              <TableCell >Proceso</TableCell>
+              <TableCell >Tipo</TableCell>
             </TableRow>
           </TableHead>
 
@@ -119,26 +125,41 @@ export const Listar = () => {
                 }}
               >
                 <TableCell>{item.sucursal}</TableCell>
-                <TableCell align="right">{item.tipoLente}</TableCell>
-                <TableCell align="right">{item.tipoColor}</TableCell>
-                <TableCell align="right">{item.tratamiento}</TableCell>
-                <TableCell align="right">{item.recepcion}</TableCell>
-                <TableCell align="right">{item.almacen}</TableCell>
-                <TableCell align="right">{item.calculo}</TableCell>
-                <TableCell align="right">{item.digital}</TableCell>
-                <TableCell align="right">{item.antireflejo}</TableCell>
-                <TableCell align="right">{item.bisel}</TableCell>
-                <TableCell align="right">{item.tinte}</TableCell>
-                <TableCell align="right">{item.controlCalidad}</TableCell>
-                <TableCell align="right">{item.despacho}</TableCell>
-                <TableCell align="right">
+                <TableCell>{item.tipoLente}</TableCell>
+                <TableCell >{item.tipoColor}</TableCell>
+                <TableCell >{item.tratamiento}</TableCell>
+                <TableCell >{item.recepcion}</TableCell>
+                <TableCell >{item.almacen}</TableCell>
+                <TableCell >{item.calculo}</TableCell>
+                <TableCell >{item.digital}</TableCell>
+                <TableCell >{item.antireflejo}</TableCell>
+                <TableCell >{item.esperaMontura}</TableCell>
+                <TableCell >{item.bisel}</TableCell>
+                <TableCell >{item.tinte}</TableCell>
+                <TableCell >{item.controlCalidad}</TableCell>
+                <TableCell >{item.despacho}</TableCell>
+                <TableCell >
                   {item.tiempoLogisticaEntrega}
                 </TableCell>
-                <TableCell align="right">{item.tiempoTransporte}</TableCell>
-                <TableCell align="right">{item.estadoAntireflejo}</TableCell>
-                <TableCell align="right">{item.estadoLente}</TableCell>
-                <TableCell align="right">{item.estadoProeceso}</TableCell>
-                <TableCell align="right">{item.tipo}</TableCell>
+                <TableCell >{item.tiempoTransporte}</TableCell>
+                <TableCell >
+                  {item.recepcion +
+                    item.almacen +
+                    item.calculo +
+                    item.digital +
+                    item.antireflejo +
+                    item.bisel +
+                    item.tinte +
+                    item.controlCalidad +
+                    item.despacho +
+                    item.tiempoLogisticaEntrega +
+                    item.tiempoTransporte +
+                    item.esperaMontura}
+                </TableCell>
+                <TableCell >{item.estadoAntireflejo}</TableCell>
+                <TableCell >{item.estadoLente}</TableCell>
+                <TableCell >{item.estadoProeceso}</TableCell>
+                <TableCell >{item.tipo}</TableCell>
               </TableRow>
             ))}
           </TableBody>

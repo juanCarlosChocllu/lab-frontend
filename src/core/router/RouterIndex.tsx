@@ -9,6 +9,7 @@ import { AutenticacionPage } from "../../autenticacion/page/AutenticacionPage";
 import { useContext } from "react";
 import { ContextAutenticacion } from "../context/contextAutenticacion";
 import { usuarioRouter } from "../../usuarios/router/usuarioRouter";
+import { rangoRouter } from "../../rango/router/rangoRouter";
 
 const rutas = (rutas: routerI[]) => {
   return rutas.map((item, i) => (
@@ -29,7 +30,8 @@ export const RouterIndex = () => {
           {rutas(reporteRouter)}
           {rutas(tiempoPrometidoRouter)}
           {rutas(tiempoProduccionRouter)}
-            {rutas(usuarioRouter)}
+          {rutas(usuarioRouter)}
+          {rutas(rangoRouter)}
         </Route>
       </Routes>
     </BrowserRouter>

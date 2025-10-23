@@ -3,8 +3,7 @@ import { SeguimientoI, VentasI } from "../interface/ventas";
 import { useEffect, useState } from "react";
 import { modalAccion } from "../../core/hook/modalAccion";
 import { SeguimientoModal } from "../modal/SeguimientoModal";
-import { paginador } from "../../core/hook/paginador";
-import { ItemsPorPagina } from "../../core/components/ItemsPorPagina";
+
 import { HttpStatus } from "../../core/enum/httpStatus";
 import TableContainer from "@mui/material/TableContainer";
 import {
@@ -19,7 +18,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { FaArrowUp } from "react-icons/fa";
+import { FaArrowRight, FaArrowUp } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";
 
 import { porcentajeIdeal } from "../../core/util/porcentajeIdeal";
@@ -142,11 +141,16 @@ export const ListarVentas = () => {
                       <FaArrowUp
                         style={{ color: "#dc2626", fontSize: "1rem" }}
                       />
-                    ) : (
-                      <FaArrowDown
-                        style={{ color: "#16a34a", fontSize: "1rem" }}
+                    ) : porcentajeIdeal(
+                      item.timpoTranscurrido,
+                      item.tiempoPrometido
+                    )  == 0 ? (
+                      <FaArrowRight
+                        style={{ color: "#8B8000", fontSize: "1rem" }}
                       />
-                    )}
+                    ): <FaArrowDown 
+                        style={{ color: "#16a34a", fontSize: "1rem" }}
+                      /> }
                     <Typography sx={{ fontSize: "0.85rem", fontWeight: 500 }}>
                       {diferenciaLaboratorioYTiempoPrometido(
                         item.timpoTranscurrido,
