@@ -3,23 +3,22 @@ import { socket } from "../config/socket";
 import { ContextAutenticacion } from "../context/contextAutenticacion";
 
 export const Notificaciones = () => {
-  const {autenticacion}=useContext(ContextAutenticacion)
+  const { autenticacion } = useContext(ContextAutenticacion);
   const [mensaje, setMensaje] = useState<string | null>(null);
 
   useEffect(() => {
-    if(autenticacion){
-socket.connect();
-    
-    socket.on("notificaciones", (msg: string) => {
-      setMensaje(msg);
-      setTimeout(() => setMensaje(null), 30000);
-    });
+    if (autenticacion) {
+      socket.connect();
 
-    return () => {
-      socket.off("notificaciones");
-      socket.disconnect();
-    };
+      socket.on("notificaciones", (msg: string) => {
+        setMensaje(msg);
+        setTimeout(() => setMensaje(null), 30000);
+      });
 
+      return () => {
+        socket.off("notificaciones");
+        socket.disconnect();
+      };
     }
   }, []);
 

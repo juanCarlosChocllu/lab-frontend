@@ -1,4 +1,4 @@
-import { useEffect, useState, ChangeEvent } from "react";
+import { useEffect, useState } from "react";
 import { listarTiempoProduccion } from "../service/tiempoProduccionService";
 import { tiempoProduccionI } from "../interface/tiempoProduccion";
 import {
@@ -51,8 +51,6 @@ export const Listar = () => {
 
   const fetchData = async () => {
     try {
-      console.log(filters);
-
       const response = await listarTiempoProduccion(pagina, filters);
       setData(response.data);
       setPaginas(response.paginas);
@@ -91,12 +89,12 @@ export const Listar = () => {
       </Button>
 
       <TableContainer
-  sx={{
-    width: "100%",        // Ocupa todo el ancho disponible
-    overflowX: "auto",    // Permite scroll horizontal si es necesario
-    margin: "auto"
-  }}
->
+        sx={{
+          width: "100%", // Ocupa todo el ancho disponible
+          overflowX: "auto", // Permite scroll horizontal si es necesario
+          margin: "auto",
+        }}
+      >
         <Table size="small">
           <TableHead>
             <TableRow sx={{ backgroundColor: "#f5f5f5" }}>

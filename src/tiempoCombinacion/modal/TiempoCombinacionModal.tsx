@@ -22,6 +22,7 @@ import {
 import { useForm } from "react-hook-form";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import { useEstadoReload } from "../../core/hook/zustan";
 
 const style = {
   position: "absolute",
@@ -38,10 +39,9 @@ const style = {
 export const TiempoCombinacionModal = ({ closeModal, isOpen }: modalI) => {
   const {
     register,
-    handleSubmit,
-    formState: { errors }
+    handleSubmit
   } = useForm<RegistrarCombinacionI>();
-
+  const  {triggerReload}= useEstadoReload()
   const [tratamiento, setTratamiento] = useState<combinacionDataI[]>([]);
   const [tipoColor, setTipoColor] = useState<combinacionDataI[]>([]);
 
@@ -64,6 +64,7 @@ export const TiempoCombinacionModal = ({ closeModal, isOpen }: modalI) => {
     try {
      const response = await   registrarCombinacion(data)
     if(response.status == 201){
+      triggerReload()
       toast.success('Registrado')
     }
     } catch (error) {
@@ -84,7 +85,7 @@ export const TiempoCombinacionModal = ({ closeModal, isOpen }: modalI) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl fullWidth sx={{ mb: 2 }}>
             <InputLabel id="select1-label">TIPO LENTE</InputLabel>
-            <Select labelId="select1-label" defaultValue="" {...register("tipoLente")}>
+            <Select labelId="select1-label" defaultValue="" {...register("tipoLente",{required:true})}>
               <MenuItem value="VISION SENCILLA">VISION SENCILLA</MenuItem>
               <MenuItem value="CUALQUIER LENTE">CUALQUIER LENTE</MenuItem>
             </Select>
@@ -92,7 +93,7 @@ export const TiempoCombinacionModal = ({ closeModal, isOpen }: modalI) => {
 
           <FormControl fullWidth sx={{ mb: 2 }}>
             <InputLabel id="select2-label">TIPO COLOR</InputLabel>
-            <Select labelId="select2-label" defaultValue="" {...register("tipoColor")}>
+            <Select labelId="select2-label" defaultValue="" {...register("tipoColor", {required:true})}>
               <MenuItem value="">Seleccione una opción</MenuItem>
               {tipoColor.map((item) => (
                 <MenuItem key={item._id} value={item._id}>
@@ -104,7 +105,7 @@ export const TiempoCombinacionModal = ({ closeModal, isOpen }: modalI) => {
 
           <FormControl fullWidth sx={{ mb: 3 }}>
             <InputLabel id="select3-label">TRATAMIENTO</InputLabel>
-            <Select labelId="select3-label" defaultValue="" {...register("tratamiento")}>
+            <Select labelId="select3-label" defaultValue="" {...register("tratamiento",{required:true})}>
               <MenuItem value="">Seleccione una opción</MenuItem>
               {tratamiento.map((item) => (
                 <MenuItem key={item._id} value={item._id}>

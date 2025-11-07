@@ -12,13 +12,14 @@ import {
 } from "@mui/material";
 import { eliminarUsuario, usuarioListar } from "../service/usuarioService";
 import { UsuariosI } from "../interface/usuarios";
+import { useEstadoReload } from "../../core/hook/zustan";
 
 export const ListarUsuarios = () => {
   const [usuarios, setUsuarios] = useState<UsuariosI[]>([]);
-
+    const { isReloading } = useEstadoReload();
   useEffect(() => {
     listar();
-  }, []);
+  }, [isReloading]);
 
   const listar = async () => {
     try {

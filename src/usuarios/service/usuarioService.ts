@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios"
 import { instance } from "../../core/config/instance"
 import { CrearUsuariosI, UsuariosI } from "../interface/usuarios"
 
@@ -11,10 +12,10 @@ export const usuarioListar =async ():Promise<UsuariosI[]> => {
 
 }
 
-export const registrarUsuario= async (data:CrearUsuariosI)=>{
+export const registrarUsuario= async (data:CrearUsuariosI):Promise<AxiosResponse>=>{
     try {
         const response = await instance.post('usuarios', data)
-        return response.data
+        return response
     } catch (error) {
         throw error
     }
