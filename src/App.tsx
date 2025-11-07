@@ -7,10 +7,12 @@ import { store } from "./core/configRedux/store";
 function App() {
   return (
     <Provider store={store}>
+      
       <ProviderAutenticaicon>
         <RouterIndex />
       </ProviderAutenticaicon>
       <ToastContainer stacked />
+
     </Provider>
   );
 }

@@ -12,19 +12,30 @@ import ListItemText from "@mui/material/ListItemText";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router";
 import { ContextAutenticacion } from "../context/contextAutenticacion";
+import { logDescargaVenta } from "../../logs/logsService";
+import { LogsDescargaI } from "../../logs/interface/logs";
+import { Notificaciones } from "./Notificaciones";
 
 const drawerWidth = 240;
 
 export function Sidebar() {
   const { logout } = useContext(ContextAutenticacion);
   const [open, setOpen] = useState(false);
+  const [fechaDescarga, setFechaDescarga] = useState<LogsDescargaI[]>([]);
+  useEffect(() => {
+    (async () => {
+      const response = await logDescargaVenta();
 
+      setFechaDescarga(response);
+    })();
+  }, []);
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
+  console.log(fechaDescarga);
 
   const menuItems = [
     { text: "Ventas", route: "/listar/venta" },
@@ -113,7 +124,27 @@ export function Sidebar() {
           p: 3,
         }}
       >
-        <Toolbar />
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <span style={{ fontWeight: "bold", fontSize: "1.1rem" }}></span>
+
+          <span style={{ color: "#555", fontSize: "0.95rem" }}>
+            {fechaDescarga.length > 0
+              ? `Actualizado hasta: ${new Date(
+                  fechaDescarga[0].fechaDescarga
+                ).toLocaleString()}`
+              : "Cargando fecha..."}
+          </span>
+          <Notificaciones />
+        </Toolbar>
+
+        <Divider sx={{ mb: 2 }} />
+
         <Outlet />
       </Box>
     </Box>

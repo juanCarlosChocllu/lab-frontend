@@ -3,12 +3,13 @@ import { instance } from "../../core/config/instance"
 import { ResponseI } from "../../core/interface/response"
 import { RegistarTiempoProduccionI, tiempoProduccionI } from "../interface/tiempoProduccion"
 
-export async  function   listarTiempoProduccion (pagina:number, limite:number):Promise<ResponseI<tiempoProduccionI>>{
+export async  function   listarTiempoProduccion (pagina:number , filter:any):Promise<ResponseI<tiempoProduccionI>>{
     try {
     const response = await instance.get('tiempo/produccion',{
         params:{
-            limite,
-            pagina
+            limite:20,
+            pagina,
+            ...filter
         }
     })
         return response.data

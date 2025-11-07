@@ -7,23 +7,28 @@ import { AutenticacionI } from "../interface/autenticacion";
 import { autenticacion } from "../service/autenticacionSerive";
 import { useContext } from "react";
 import { ContextAutenticacion } from "../../core/context/contextAutenticacion";
+import { AxiosError } from "axios";
+import { toast } from "react-toastify";
 
 export const Autenticacion = () => {
-  const { register, handleSubmit } = useForm<AutenticacionI>();
-  const {setEstadoAutenticacion}= useContext(ContextAutenticacion)
-  const onSubmit =async (data: AutenticacionI) => {
+  const { register, handleSubmit     } = useForm<AutenticacionI>();
+  const { setEstadoAutenticacion } = useContext(ContextAutenticacion);
+  const onSubmit = async (data: AutenticacionI) => {
     try {
-      const response  =  await  autenticacion(data)
-      if(response.status==200 ){
-        setEstadoAutenticacion(true)
-        window.location.href= '/listar/venta'
+      const response = await autenticacion(data);
+      if (response.status == 200) {
+        setEstadoAutenticacion(true);
+        window.location.href = "/listar/venta";
       }
-      
     } catch (error) {
-      console.log(error);
-      
+      const e = error as AxiosError<any>
+      if(e.status == 401){
+        toast.error(e.response?.data.message)
+      }else{
+      toast.error(e.message)
+      }
+
     }
-   
   };
 
   return (
@@ -97,7 +102,7 @@ export const Autenticacion = () => {
               <PersonOutlineIcon sx={{ color: "#7986cb", mr: 1 }} />
               <input
                 id="username"
-                {...register("username")}
+                {...register("username",{required:true})}
                 type="text"
                 required
                 autoFocus
@@ -127,7 +132,7 @@ export const Autenticacion = () => {
               <LockOutlinedIcon sx={{ color: "#7986cb", mr: 1 }} />
               <input
                 id="password"
-                {...register("password")}
+                {...register("password", {required:true})}
                 type="password"
                 required
                 placeholder="Contraseña"

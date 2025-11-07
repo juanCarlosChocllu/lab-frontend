@@ -7,9 +7,7 @@ import { CombinacionTimepoI } from "../../tiempoCombinacion/interface/tiempoComb
 import { listarSucursal } from "../../sucursal/service/sucursalService";
 import { ListarSucursalI } from "../../sucursal/interface/sucursal";
 import { useForm } from "react-hook-form";
-import {
-  RegistarTiempoProduccionI,
-} from "../interface/tiempoProduccion";
+import { RegistarTiempoProduccionI } from "../interface/tiempoProduccion";
 import { registrarTiempoProduccion } from "../service/tiempoProduccionService";
 import { toast } from "react-toastify";
 
@@ -23,7 +21,7 @@ export const Crear = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm<RegistarTiempoProduccionI>();
   useEffect(() => {
     (async () => {
@@ -42,9 +40,30 @@ export const Crear = () => {
 
   const onSubmit = async (data: RegistarTiempoProduccionI) => {
     try {
+      if (data.antireflejo > 0) {
+        data.estadoAntireflejo = "CON ANTIREFLEJO";
+      } else {
+        data.estadoAntireflejo = "SIN ANTIREFLEJO";
+      }
+
+      if (data.bisel > 0) {
+        data.estadoProeceso = "CON BISELADO";
+      } else {
+        data.estadoProeceso = "SIN BISELADO";
+      }
+      
+      if (data.estadoLente == 'TERMINADO') {
+        data.tipo = "STOCK";
+      } else {
+        data.tipo = "LABORATORIO";
+      }
+
+   
+     
+
       const response = await registrarTiempoProduccion(data);
       if (response.status === 201) {
-        toast.success('Registrado')
+        toast.success("Registrado");
       }
     } catch (error) {
       console.log(error);
@@ -87,7 +106,9 @@ export const Crear = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Almacén</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Almacén
+          </label>
           <input
             {...register("almacen", {
               valueAsNumber: true,
@@ -103,7 +124,9 @@ export const Crear = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Espera de montura</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Espera de montura
+          </label>
           <input
             {...register("esperaMontura", {
               valueAsNumber: true,
@@ -115,11 +138,15 @@ export const Crear = () => {
             className="w-full border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-md p-2 shadow-sm transition-all"
             step="any"
           />
-          {errors.esperaMontura && <Alert severity="error">Ingresa el valor</Alert>}
+          {errors.esperaMontura && (
+            <Alert severity="error">Ingresa el valor</Alert>
+          )}
         </div>
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Digital</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Digital
+          </label>
           <input
             {...register("digital", {
               valueAsNumber: true,
@@ -135,7 +162,9 @@ export const Crear = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Bisel</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Bisel
+          </label>
           <input
             {...register("bisel", {
               valueAsNumber: true,
@@ -151,7 +180,9 @@ export const Crear = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Tinte</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Tinte
+          </label>
           <input
             {...register("tinte", {
               valueAsNumber: true,
@@ -167,7 +198,9 @@ export const Crear = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Cálculo</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Cálculo
+          </label>
           <input
             {...register("calculo", {
               valueAsNumber: true,
@@ -183,7 +216,9 @@ export const Crear = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Antirreflejo</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Antirreflejo
+          </label>
           <input
             {...register("antireflejo", {
               valueAsNumber: true,
@@ -195,11 +230,15 @@ export const Crear = () => {
             className="w-full border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-md p-2 shadow-sm transition-all"
             step="any"
           />
-          {errors.antireflejo && <Alert severity="error">Ingresa el valor</Alert>}
+          {errors.antireflejo && (
+            <Alert severity="error">Ingresa el valor</Alert>
+          )}
         </div>
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Despacho</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Despacho
+          </label>
           <input
             {...register("despacho", {
               valueAsNumber: true,
@@ -215,7 +254,9 @@ export const Crear = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Control de Calidad</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Control de Calidad
+          </label>
           <input
             {...register("controlCalidad", {
               valueAsNumber: true,
@@ -227,11 +268,15 @@ export const Crear = () => {
             className="w-full border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-md p-2 shadow-sm transition-all"
             step="any"
           />
-          {errors.controlCalidad && <Alert severity="error">Ingresa el valor</Alert>}
+          {errors.controlCalidad && (
+            <Alert severity="error">Ingresa el valor</Alert>
+          )}
         </div>
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Tiempo Logística Entrega</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Tiempo Logística Entrega
+          </label>
           <input
             {...register("tiempoLogisticaEntrega", {
               valueAsNumber: true,
@@ -243,11 +288,15 @@ export const Crear = () => {
             className="w-full border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-md p-2 shadow-sm transition-all"
             step="any"
           />
-          {errors.tiempoLogisticaEntrega && <Alert severity="error">Ingresa el valor</Alert>}
+          {errors.tiempoLogisticaEntrega && (
+            <Alert severity="error">Ingresa el valor</Alert>
+          )}
         </div>
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Tiempo de transporte</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Tiempo de transporte
+          </label>
           <input
             {...register("tiempoTransporte", {
               valueAsNumber: true,
@@ -259,35 +308,17 @@ export const Crear = () => {
             className="w-full border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-md p-2 shadow-sm transition-all"
             step="any"
           />
-          {errors.tiempoTransporte && <Alert severity="error">Ingresa el valor</Alert>}
+          {errors.tiempoTransporte && (
+            <Alert severity="error">Ingresa el valor</Alert>
+          )}
         </div>
 
-        {/* Selects bonitos */}
-        <div>
-          <label className="block text-gray-700 font-semibold mb-2">Origen</label>
-          <select {...register("tipo", { required: true })} className="w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition-all">
-            <option value="">Selecciona</option>
-            <option value="STOCK">STOCK</option>
-            <option value="LABORATORIO">LABORATORIO</option>
-          </select>
-          {errors.tipo && <Alert severity="error">Seleccione un valor</Alert>}
-        </div>
+       
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Antirreflejo</label>
-          <select
-            {...register("estadoAntireflejo", { required: true })}
-            className="w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition-all"
-          >
-            <option value="">Selecciona</option>
-            <option value="CON ANTIREFLEJO">CON ANTIREFLEJO</option>
-            <option value="SIN ANTIREFLEJO">SIN ANTIREFLEJO</option>
-          </select>
-          {errors.estadoAntireflejo && <Alert severity="error">Seleccione un valor</Alert>}
-        </div>
-
-        <div>
-          <label className="block text-gray-700 font-semibold mb-2">Tipo de Lente</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Tipo de Lente
+          </label>
           <select
             {...register("estadoLente", { required: true })}
             className="w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition-all"
@@ -296,24 +327,15 @@ export const Crear = () => {
             <option value="TERMINADO">TERMINADO</option>
             <option value="SEMI TERMINADO">SEMI TERMINADO</option>
           </select>
-          {errors.estadoLente && <Alert severity="error">Seleccione un valor</Alert>}
+          {errors.estadoLente && (
+            <Alert severity="error">Seleccione un valor</Alert>
+          )}
         </div>
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Biselado</label>
-          <select
-            {...register("estadoProeceso", { required: true })}
-            className="w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition-all"
-          >
-            <option value="">Selecciona</option>
-            <option value="CON BISELADO">CON BISELADO</option>
-            <option value="SIN BISELADO">SIN BISELADO</option>
-          </select>
-          {errors.estadoProeceso && <Alert severity="error">Seleccione un valor</Alert>}
-        </div>
-
-        <div>
-          <label className="block text-gray-700 font-semibold mb-2">Combinación</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Combinación
+          </label>
           <select
             {...register("combinacionTiempo", { required: true })}
             className="w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition-all"
@@ -325,11 +347,15 @@ export const Crear = () => {
               </option>
             ))}
           </select>
-          {errors.combinacionTiempo && <Alert severity="error">Seleccione un valor</Alert>}
+          {errors.combinacionTiempo && (
+            <Alert severity="error">Seleccione un valor</Alert>
+          )}
         </div>
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Empresa</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Empresa
+          </label>
           <select
             onClick={(e) => {
               const target = e.target as HTMLSelectElement;
@@ -349,7 +375,9 @@ export const Crear = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Sucursal</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Sucursal
+          </label>
           <select
             {...register("sucursal", { required: true })}
             className="w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition-all"
@@ -361,7 +389,9 @@ export const Crear = () => {
               </option>
             ))}
           </select>
-          {errors.sucursal && <Alert severity="error">Seleccione un valor</Alert>}
+          {errors.sucursal && (
+            <Alert severity="error">Seleccione un valor</Alert>
+          )}
         </div>
 
         <div className="md:col-span-2 lg:col-span-3 flex justify-center mt-10">
